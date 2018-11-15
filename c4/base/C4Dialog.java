@@ -93,7 +93,7 @@ public class C4Dialog extends JDialog {
      * start a new game; otherwise, prompt the user for a confirmation 
      * and then proceed accordingly. */
     private void newButtonClicked(ActionEvent event) {
-    	if (board.isFull() || JOptionPane.showConfirmDialog(C4Dialog.this, "Play a new game?", 
+    	if (Board.isGameOver() || board.isFull() || JOptionPane.showConfirmDialog(C4Dialog.this, "Play a new game?",
     			"Connect Four", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
     		startNewGame();
     	}
