@@ -3,7 +3,6 @@ package c4.ext;
 import java.awt.Color;
 import java.util.*;
 import c4.base.*;
-import c4.model.*;
 
 public privileged aspect AddOpponent{
 	   /** Two players of the game. */
@@ -15,7 +14,7 @@ public privileged aspect AddOpponent{
 	       showMessage(player.name() + "'s turn.");
 	       repaint();
 	   }
-	   /*Before the UI is configured we will add two players to our list of players, one red and one blue*/
+	   /**Before the UI is configured we will add two players to our list of players, one red and one blue*/
 	   before(): call (void C4Dialog.configureUI()){
 		   ColorPlayer blue = new ColorPlayer("Blue", Color.BLUE);
 		   players.add(blue);
@@ -28,6 +27,11 @@ public privileged aspect AddOpponent{
 		   else
 			   dialog.player = players.get(1);
 		   dialog.changeTurn(dialog.player);
+	   }
+	   
+	   before(C4Dialog dialog):target(dialog) && execution(void C4Dialog.startNewGame()){
+		   if(dialog.player.name().equals("Red"))
+			   dialog.player  = players.get(0);
 	   }
 	   
 }
