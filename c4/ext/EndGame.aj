@@ -26,8 +26,8 @@ public privileged aspect EndGame {
             else{
                 dialog.showMessage("blue won!");
                 }
-            }
             winRow = dialog.board.winningRow();
+            }
         }
     }
     after(BoardPanel bp, Graphics g): execution(void BoardPanel.paint(Graphics)) && args(g) && this(bp){
