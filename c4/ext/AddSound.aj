@@ -1,6 +1,5 @@
 package c4.ext;
 
-import java.awt.Color;
 import java.io.*;
 import javax.sound.sampled.*;
 import c4.base.*;
@@ -27,21 +26,25 @@ public privileged aspect AddSound {
      }
    }
 
-   before(C4Dialog dialog):target(dialog) && execution(void C4Dialog.makeMove(int)){
-	  if(dialog.player.name().equals("Red"))
-		  pl =0;
-	  else
-		  pl =1;
-   }
+  
 	pointcut callMakeMovePointCut():
 		execution(void C4Dialog.makeMove(int));
 	
+	after(C4Dialog dialog):target(dialog) && callMakeMovePointCut(){
+		if(dialog.board.isGameOver())
+			playAudio("Win Sound.wav");
+	}
 	after(): callMakeMovePointCut(){
 		if(pl == 0)
 			playAudio("scream1.wav");
 		else
 			playAudio("scream2.wav");
 	}
-	
+	 before(C4Dialog dialog):target(dialog) && execution(void C4Dialog.makeMove(int)){
+		  if(dialog.player.name().equals("Red"))
+			  pl =0;
+		  else
+			  pl =1;
+	   }
 }
 
