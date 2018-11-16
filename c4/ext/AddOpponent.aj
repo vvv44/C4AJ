@@ -22,12 +22,15 @@ public privileged aspect AddOpponent{
 	   }
 	   
 	   after(C4Dialog dialog):target(dialog) && execution(void C4Dialog.makeMove(int)){
-		   if(dialog.player.name().equals("Red"))
-			   dialog.player  = players.get(0);
-		   else
-			   dialog.player = players.get(1);
-		   dialog.changeTurn(dialog.player);
+		   if(!dialog.board.isGameOver()){
+			   if(dialog.player.name().equals("Red"))
+				   dialog.player  = players.get(0);
+			   else
+				   dialog.player = players.get(1);
+			   dialog.changeTurn(dialog.player);
+		   }
 	   }
+	   
 	   
 	   before(C4Dialog dialog):target(dialog) && execution(void C4Dialog.startNewGame()){
 		   if(dialog.player.name().equals("Red"))
