@@ -1,10 +1,8 @@
 package c4.ext;
 import c4.base.BoardPanel;
-import c4.base.C4Dialog;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
 
 
 public privileged aspect pressDisc {
