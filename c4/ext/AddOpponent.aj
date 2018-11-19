@@ -24,7 +24,9 @@ public privileged aspect AddOpponent{
 		   players.add(blue);
 		   players.add(new ColorPlayer("Red", Color.RED));
 	   }
-	   
+	   /**
+	    * After the move is made, we check which was the player that moved, and change it
+	    * */
 	   after(C4Dialog dialog):target(dialog) && execution(void C4Dialog.makeMove(int)){
 		   if(!dialog.board.isGameOver()){
 			   if(dialog.player.name().equals("Red"))
@@ -37,15 +39,18 @@ public privileged aspect AddOpponent{
 		   
 	   }
 	   
-	   
+	   /**Before the code for new button executes, we check if the last player that played was red
+	    * if so we reset turn to blue.
+	    * */
 	   before(C4Dialog dialog):target(dialog) && execution(void C4Dialog.startNewGame()){
 		   if(dialog.player.name().equals("Red"))
 			   dialog.player  = players.get(0);
+		   p = dialog.player;
 	   }
-	   
+	   /**Before the boardpanel is drawn, we set the droppable disk's to the color of the player whose turn is it. Then we draw the checkers*/
 	   void around(BoardPanel bp, Graphics g): execution(void BoardPanel.paint(Graphics)) && args(g) && this(bp){
-		  proceed(bp,g);
-		  bp.setDropColor(p.color());
+		   bp.setDropColor(p.color());
+		   proceed(bp,g); 
 	   }
 	   
 }
