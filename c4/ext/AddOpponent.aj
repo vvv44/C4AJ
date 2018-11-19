@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.*;
 import c4.base.*;
-import c4.model.Player;
 
 public privileged aspect AddOpponent{
 	   /** Two players of the game. */
