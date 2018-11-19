@@ -1,3 +1,9 @@
+/**
+ * Víctor Vargas
+ * Felipe Leal
+ * Daniel Gomez
+ * */
+
 package c4.ext;
 
 import java.io.*;
@@ -26,20 +32,24 @@ public privileged aspect AddSound {
      }
    }
 
-  
+  /**Pointcut to be used by methods*/
 	pointcut callMakeMovePointCut():
 		execution(void C4Dialog.makeMove(int));
-	
+	/**
+	 * We will play an audio of winning if the game is over
+	 * */
 	after(C4Dialog dialog):target(dialog) && callMakeMovePointCut(){
 		if(dialog.board.isGameOver())
 			playAudio("Win Sound.wav");
 	}
+	/**Play different audio depending on player that just moved*/
 	after(): callMakeMovePointCut(){
 		if(pl == 0)
 			playAudio("scream1.wav");
 		else
 			playAudio("scream2.wav");
 	}
+	/**Set which player used its turn*/
 	 before(C4Dialog dialog):target(dialog) && execution(void C4Dialog.makeMove(int)){
 		  if(dialog.player.name().equals("Red"))
 			  pl =0;

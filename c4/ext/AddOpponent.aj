@@ -1,3 +1,9 @@
+/**
+ * Víctor Vargas
+ * Felipe Leal
+ * Daniel Gomez
+ * */
+
 package c4.ext;
 
 import java.awt.Color;
@@ -28,13 +34,13 @@ public privileged aspect AddOpponent{
 	    * After the move is made, we check which was the player that moved, and change it
 	    * */
 	   after(C4Dialog dialog):target(dialog) && execution(void C4Dialog.makeMove(int)){
-		   if(!dialog.board.isGameOver()){
+		   if(!dialog.board.isGameOver()){   			//If the game is not over we proceed to do the turn change
 			   if(dialog.player.name().equals("Red"))
 				   dialog.player  = players.get(0);
 			   else
 				   dialog.player = players.get(1);
 			   dialog.changeTurn(dialog.player);
-			   p = dialog.player;
+			   p = dialog.player; //we set our local variable to use it in other methods
 		   }
 		   
 	   }
@@ -49,7 +55,7 @@ public privileged aspect AddOpponent{
 	   }
 	   /**Before the boardpanel is drawn, we set the droppable disk's to the color of the player whose turn is it. Then we draw the checkers*/
 	   void around(BoardPanel bp, Graphics g): execution(void BoardPanel.paint(Graphics)) && args(g) && this(bp){
-		   bp.setDropColor(p.color());
+		   bp.setDropColor(p.color()); //we use our local variable to set the correct color
 		   proceed(bp,g); 
 	   }
 	   
